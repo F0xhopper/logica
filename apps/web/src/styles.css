@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* DESIGN.md §2 tokens. */
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --grey-1: #f5f5f5;
+  --grey-2: #e5e5e5;
+  --grey-3: #a3a3a3;
+  --grey-4: #525252;
+
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: ui-serif, Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, Menlo, monospace;
+
+  --radius: 4px;
+  --border: 1px solid var(--grey-2);
+  --border-strong: 2px solid var(--fg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --fg: #ffffff;
+    --grey-1: #171717;
+    --grey-2: #262626;
+    --grey-3: #737373;
+    --grey-4: #a3a3a3;
+  }
+}
+
+/* `inline` so utilities reference the live variables and follow the dark-mode swap. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-grey-1: var(--grey-1);
+  --color-grey-2: var(--grey-2);
+  --color-grey-3: var(--grey-3);
+  --color-grey-4: var(--grey-4);
+
+  --font-sans: var(--sans);
+  --font-serif: var(--serif);
+  --font-mono: var(--mono);
+}
+
+@theme {
+  --radius: 4px;
+  --animate-fade-in: fade-in 150ms ease-out;
+  --animate-pulse-dot: pulse-dot 1.2s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes pulse-dot {
+    50% {
+      opacity: 0.25;
+    }
+  }
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+}
+
+/* React Flow overrides: flat, monochrome, no default chrome. */
+.react-flow {
+  --xy-background-color: var(--bg);
+  --xy-edge-stroke: var(--fg);
+  --xy-attribution-background-color: transparent;
+  background: var(--bg);
+}
+
+.react-flow__node {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  border-radius: var(--radius);
+}
+
+.react-flow__node:focus,
+.react-flow__node:focus-visible {
+  outline: none;
+}
+
+.react-flow__node:focus-visible > * {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+.react-flow__handle {
+  opacity: 0;
+  border: 0;
+  min-width: 1px;
+  min-height: 1px;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* Attribution stays visible (xyflow asks for it) but quiet. */
+.react-flow__attribution {
+  background: transparent;
+}
+.react-flow__attribution a {
+  color: var(--grey-3);
+  font-family: var(--sans);
+}
